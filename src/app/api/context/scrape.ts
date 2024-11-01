@@ -1,4 +1,4 @@
-import { load, type Element } from 'cheerio';
+import { load } from 'cheerio';
 const puppeteer = require('puppeteer'); // To load dynamic pages
 
 interface Entry {
@@ -11,7 +11,7 @@ async function getWebsiteSitemap(url: string, pages: number): Promise<string[]> 
   const $ = load(await response.text());
 
   const sitemapLinks: string[] = $('urlset > url > loc')
-    .map((index: number, element: Element) => $(element).text().trim())
+    .map((index, element) => $(element).text().trim())
     .get();
 
   return sitemapLinks.slice(0, pages);
@@ -43,7 +43,7 @@ async function getEntriesFromLinks(links: string[]): Promise<Entry[]> {
       const $ = load(response);
 
       const contentArray: string[] = [];
-      $('p').each((index: number, element: Element) => {
+      $('p').each((index, element) => {
         contentArray.push($(element).text().trim());
         // console.log("Paragraph: ", $(element).text().trim());
       });
