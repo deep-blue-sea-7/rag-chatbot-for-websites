@@ -1,7 +1,5 @@
 import { load } from 'cheerio';
 const chromium = require('@sparticuz/chromium-min');
-const puppeteer = require('puppeteer-core');
-const {executablePath} = require('puppeteer');
 
 
 interface Entry {
@@ -32,6 +30,7 @@ async function getEntriesFromLinks(links: string[]): Promise<Entry[]> {
     try {      
       let browser;
       if(process.env.NODE_ENV === "production") {
+        const puppeteer = await import("puppeteer-core");
           browser = await puppeteer.launch({
               args: chromium.args,
               defaultViewport: chromium.defaultViewport,
@@ -39,10 +38,12 @@ async function getEntriesFromLinks(links: string[]): Promise<Entry[]> {
               headless: chromium.headless,
           });
       } else {
+        const puppeteer = await import("puppeteer");
+        const {executablePath} = require('puppeteer');
           browser = await puppeteer.launch({
               args: ["--no-sandbox", "--disable-setuid-sandbox"],
               executablePath: executablePath(),
-              headless: 'new'
+              // headless: 'new'
           });
       }
 
