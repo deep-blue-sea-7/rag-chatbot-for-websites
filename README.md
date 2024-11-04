@@ -10,6 +10,10 @@ Once the data has been loaded and stored into the vector database, you'll be abl
 
 ![alt text](chat_page.png)
 
+And you can ask questions that pertain to the content of the website page(s) you have just processed:
+
+![alt text](site-prompts.png)
+
 ## How it works
 
 - **Context-Aware Conversations**: The chatbot uses LanceDB to store and retrieve vector embeddings of website content, enabling it to provide context-aware responses based on the submitted website.
