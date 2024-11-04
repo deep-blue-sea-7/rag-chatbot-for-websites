@@ -41,7 +41,7 @@ Cheerio
 
 First, rename `.env.example` to `.env.local`, and fill out `OPENAI_API_KEY` with your OpenAI API key. You can get one [here](https://openai.com/blog/openai-api).
 
-Run the development server: bma npm install
+Run the development server:
 
 ```bash
 npm run dev
