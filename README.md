@@ -28,6 +28,12 @@ And you can ask questions that pertain to the content of the website page(s) you
 - **Website Sitemap Processing**: Users can submit a website sitemap.xml to process multiple links at once. This feature is useful for large websites with a complex structure.
 - **Direct URL Submission**: Users can also submit a direct URL for the chatbot to process. This feature is useful for smaller websites or specific web pages.
 
+## Try the App Now
+
+You can run this now here: **[Live App on Vercel](https://rag-chatbot-for-websites.vercel.app)**
+
+**Note**: The live app is using my OpenAI API key which might be out of tokens dependig on hhow many users have tried the app.
+
 ## Prerequisites and Technologies
 
 ```
