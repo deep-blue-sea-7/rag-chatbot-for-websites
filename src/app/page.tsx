@@ -23,7 +23,7 @@ export default function Home() {
           <Chat state={state} setState={setState} />
         </div>
       ) : (
-        <div className="p-6 md:p-24" >
+        <div className="p-6 md:p-16" >
           <div className="md:w-50">
             <h5 className="mb-5 text-4xl md:text-8xl font-bold tracking-tight text-gray-900">AI Chatbot with <span className="text-lancedb">any website</span></h5>
             <p className="block mb-16 w-5/6 text-left text-xl font-normal text-gray-700">Use an AI chatbot with website context retrieved from the on-perm vector store LanceDB.
@@ -61,6 +61,9 @@ export default function Home() {
               <p className="font-normal text-gray-500 ">By using a source of truth, we provide a structural basis for LLM answers. This is known as retrieval augmented generation.</p>
             </div>
           </div>
+          <p className="text-gray-500 text-md md:p-8">
+            If the app ran out of tokens or you would like us to build you a similar app, please contact us at <a href="https://inovantech.com " target="_blank" className="ml-1 mr-1 inline-flex items-center font-medium text-lancedb hover:underline">inovantech.com</a>.
+          </p>  
         </div>
       )
       }

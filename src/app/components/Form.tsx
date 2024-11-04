@@ -6,13 +6,14 @@ export default function Form({ state, setState }: { state: MainState, setState: 
   const [input, setInput] = useState('')
   const [websiteLoading, setWebsiteLoading] = useState(false)
   const [linkLoading, setLinkLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [websiteError, setWebsiteError] = useState('')
+  const [linkError, setLinkError] = useState('')
   const websiteBase = state.website.split('/')[2]
 
   const handleWebsiteSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setWebsiteLoading(true)
-    setError('')
+    setWebsiteError('')
     const response = await fetch("/api/context", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,7 +23,7 @@ export default function Form({ state, setState }: { state: MainState, setState: 
       const table = (await response.json()).table
       setState({ ...state, chat: true, website: state.website, table })
     } else {
-      setError('Failed to load data into LanceDB: Check the given url.')
+      setWebsiteError('Please check the given url sitemap.xml and your OpenAI tokens')
     }
     setWebsiteLoading(false)
   }
@@ -30,7 +31,7 @@ export default function Form({ state, setState }: { state: MainState, setState: 
   const handleLinkSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLinkLoading(true)
-    setError('')
+    setLinkError('')
     const response = await fetch("/api/context", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +41,7 @@ export default function Form({ state, setState }: { state: MainState, setState: 
       const table = (await response.json()).table
       setState({ ...state, chat: true, website: state.link, table })
     } else {
-      setError('Failed to load data into LanceDB: Check the given url.')
+      setLinkError('Please check the given url and your OpenAI tokens')
     }
     setLinkLoading(false)
   }
@@ -95,9 +96,9 @@ export default function Form({ state, setState }: { state: MainState, setState: 
           </svg>
         ) : null}
 
-        {error ? (
+        {websiteError ? (
           <div className="p-2 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
-            {error}
+            {websiteError}
           </div>
         ) : null}
       </div>
@@ -134,9 +135,9 @@ export default function Form({ state, setState }: { state: MainState, setState: 
             </svg>
           ) : null}
 
-          {error ? (
+          {linkError ? (
             <div className="p-2 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
-              {error}
+              {linkError}
             </div>
           ) : null}
         </div>

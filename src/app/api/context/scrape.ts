@@ -1,5 +1,8 @@
 import { load } from 'cheerio';
-const puppeteer = require('puppeteer'); // To load dynamic pages
+const chromium = require('@sparticuz/chromium-min');
+const puppeteer = require('puppeteer-core');
+const {executablePath} = require('puppeteer');
+
 
 interface Entry {
   link: string;
@@ -21,17 +24,33 @@ async function getEntriesFromLinks(links: string[]): Promise<Entry[]> {
   let allEntries: Entry[] = [];
 
   // Use of an agent allows us to open the browser in the background.
-  const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36';
+  // const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36';
 
   for (const link of links) {
     console.log('Scraping Page: ', link);
-    try {
-      const browser = await puppeteer.launch({ headless: 'new' });
+
+    try {      
+      let browser;
+      if(process.env.NODE_ENV === "production") {
+          browser = await puppeteer.launch({
+              args: chromium.args,
+              defaultViewport: chromium.defaultViewport,
+              executablePath: await chromium.executablePath(),
+              headless: chromium.headless,
+          });
+      } else {
+          browser = await puppeteer.launch({
+              args: ["--no-sandbox", "--disable-setuid-sandbox"],
+              executablePath: executablePath(),
+              headless: 'new'
+          });
+      }
+
       const page = await browser.newPage();
-      page.setUserAgent(ua);
+      // page.setUserAgent(ua);
     
       const res = await page.goto(link)
-      const text = await res.text();
+      const text = await res!.text();
 
         // Wait for the content to be dynamically loaded
       await page.waitForSelector('body');
